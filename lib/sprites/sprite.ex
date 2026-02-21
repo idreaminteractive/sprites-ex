@@ -60,6 +60,12 @@ defmodule Sprites.Sprite do
     client.token
   end
 
+  @spec path(t(), String.t(), keyword()) :: String.t()
+  def path(%__MODULE__{name: name}, endpoint, params \\ []) do
+    query = if params == [], do: "", else: "?#{URI.encode_query(params)}"
+    "/v1/sprites/#{URI.encode(name)}#{endpoint}#{query}"
+  end
+
   defp build_query_params(command, args, opts) do
     [{"path", command} | Enum.map([command | args], &{"cmd", &1})]
     |> add_stdin_param(opts)
