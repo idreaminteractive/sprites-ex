@@ -536,6 +536,8 @@ defmodule Sprites.Filesystem do
   def chmod(%__MODULE__{} = fs, path, mode, opts \\ []) do
     recursive = Keyword.get(opts, :recursive, false)
 
+    url = build_url(fs, "/fs/chmod", path: resolve_path(fs, path), workingDir: fs.working_dir)
+
     body = %{
       path: resolve_path(fs, path),
       workingDir: fs.working_dir,
@@ -543,7 +545,7 @@ defmodule Sprites.Filesystem do
       recursive: recursive
     }
 
-    case Req.post(fs.sprite.client.req, url: "/fs/chmod", json: body) do
+    case Req.post(fs.sprite.client.req, url: url, json: body) do
       {:ok, %{status: status}} when status in 200..299 ->
         :ok
 
