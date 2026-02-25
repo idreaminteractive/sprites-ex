@@ -530,9 +530,9 @@ defmodule Sprites.Filesystem do
 
   ## Examples
 
-      :ok = Sprites.Filesystem.chmod(fs, "script.sh", 0o755)
+      :ok = Sprites.Filesystem.chmod(fs, "script.sh", "0755")
   """
-  @spec chmod(t(), String.t(), non_neg_integer(), keyword()) :: :ok | {:error, term()}
+  @spec chmod(t(), String.t(), String.t(), keyword()) :: :ok | {:error, term()}
   def chmod(%__MODULE__{} = fs, path, mode, opts \\ []) do
     recursive = Keyword.get(opts, :recursive, false)
 
@@ -565,9 +565,9 @@ defmodule Sprites.Filesystem do
 
   ## Examples
 
-      Sprites.Filesystem.chmod!(fs, "script.sh", 0o755)
+      Sprites.Filesystem.chmod!(fs, "script.sh", "0755")
   """
-  @spec chmod!(t(), String.t(), non_neg_integer(), keyword()) :: :ok
+  @spec chmod!(t(), String.t(), String.t(), keyword()) :: :ok
   def chmod!(fs, path, mode, opts \\ []) do
     case chmod(fs, path, mode, opts) do
       :ok -> :ok
